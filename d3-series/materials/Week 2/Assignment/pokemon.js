@@ -4086,25 +4086,44 @@ const data = [{
 
 // Part 2 pokemon.json
 //     - Calculate the average weight (lbs) and height (in inches) of the pokemon. Note you will have to convert the units to lbs and inches. 
-getPokeHeights = (data) => {
-    var heights = data.map(e => { // convert height to number and that number (in meters) to inches (by multiplying  x 39.37)
-        parseFloat(e.height) * 39.37
+getPokeHeights = (arr) => {
+    var heights = arr.map(e => { // convert height to number and that number (in meters) to inches (by multiplying  x 39.37)
+        return parseFloat(e.height) * 39.37
     })
     const h = heights.reduce(function (a, b) { return a + b }) // adding all numbers together
     const avHgt = Math.round(h / heights.length) // dividing by length of heights for average
-    return "Avg height is " + avHgt + "inches."
+    return "Avg height is " + avHgt + " inches."
 }
 
-getPokeWeights = (data) => {
-    var weights = data.map(e => { // convert weight to number and that number (in kg) to lbs (by multiplying x 2.205)
-        parseFloat(e.weight) * 2.205
+getPokeWeights = (arr) => {
+    var weights = arr.map(e => { // convert weight to number and that number (in kg) to lbs (by multiplying x 2.205)
+        return parseFloat(e.weight) * 2.205
     })
     const w = weights.reduce(function (a, b) { return a + b }) // adding all numbers together
     const avWgt = Math.round(parseFloat(w / weights.length)) // dividing by length of weights for average
-    return "Avg weight is " + avWgt + "inches."
+    return "Avg weight is " + avWgt + " lbs."
 }
 
 //     - What is the total egg distance (value on egg property) for all pokemon who have a weakness of 'Psychic'. 'Weaknesses' is a property on each pokemon object that contains a list of strings. Note: some 'egg' properties say 'Not in Eggs'. consider this value a -1 in your summation.
+getPsychicEggDistance = (arr) => {
+    var hasEggs = x => {// pokemon that have egg distances
+        return x.eggs != "Not in Eggs"
+    }
+
+    var isPsychic = m => { // pokemon that have a weakness of Psychic
+        // return
+        return m.weaknesses.filter("Psychic")
+    }
+    var pokeEggs = arr.filter(hasEggs)
+
+    var psychicEggs = pokeEggs.filter(isPsychic)
+
+
+    return psyches.reduce((a, b) => a + b) // add all of the values, return total 
+
+
+}
+
 
 //     - Determine which type of pokemon has the most weaknesses on average. List the types of pokemon and the number of their weaknesses in a list in descending order. Note: a pokemon can have more than one type. Because of this the same pokemon can be counted for more than one type. For example: the first object with id:1 would count as both 'Grass' and 'Poison' type.
 

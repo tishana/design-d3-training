@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div id="myDiv"></div>
+
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script>
+        // CORS Issues
+        //Node.js (from https://stackoverflow.com/questions/10752055/cross-origin-requests-are-only-supported-for-http-error-when-loading-a-local/21608670#21608670)
+        // Alternatively, if you demand a more responsive setup and already use nodejs...
+        // Install http-server by typing npm install -g http-server
+        // Change into your working directory, where yoursome.html lives
+        // Start your http server by issuing http-server -c-1
+        // This spins up a Node.js httpd which serves the files in your directory as static files accessible from http://localhost:8080
+
+        // 7-2-2020 unable to get appended shapes to show inside the body
+
+        // 1. In a new HTML file, read in data.json file using D3. 
+        // This file contains an array of 10 objects that have the following properties: size and color.
+        // THERE WERE ONLY 9 OBJECTS IN data.json, so I added one size 40 color bisque
+        d3.json('data.json', (e, data) => {
+
+            if (e) { console.log("Unable to load data") }
+            // call function here using the data
+            createRects(data)
+            creatCircles(data)
+        })
+
+
+        // 2. In the top half the screen, create 10 rectangles (one for each object in the data) with widths and fill colors equal to the `size` and `color` properties on the corresponding data object.
+
+        createRects = (data) => {
+            // const rectangles = d3.select("#myDiv")
+            const rectangles = d3.select("body")
+                .data(data)
+
+
+            rectangles
+                .enter()
+                .append('rect')
+                .attr('x', (d, i) => (i * 10) + 2)
+                .attr('y', 50)
+                .attr('width', d => d.size)
+                .attr('height', 10)
+                .style('color', d => d.color)
+        }
+        // 3. In the bottom half of the screen, create 10 circles (one for each object in the data) with fill colors equal to the `color` property on the corresponding data object.  Now picture the screen as an Cartesian plane with (0, 0) at the upper-left corner of the screen.
+        // Position each circle such that the coordinates of its center are (`size`, -2*`size`).
+        creatCircles = (data) => {
+            // const circs = d3.select("#myDiv")
+            const circs = d3.select("body")
+                .data(data)
+
+            circs
+                .enter()
+                .append('circle')
+                .attr('cx', d => d.size)
+                .attr('cy', d => d.size * -2)
+                .attr('r', 5)
+                .style('color', d => d.color)
+        }
+    </script>
+</body>
+
+</html>
