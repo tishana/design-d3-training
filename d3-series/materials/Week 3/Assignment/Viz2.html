@@ -32,10 +32,8 @@
         // 2. In the top half the screen, create 10 rectangles (one for each object in the data) with widths and fill colors equal to the `size` and `color` properties on the corresponding data object.
 
         createRects = (data) => {
-            // const rectangles = d3.select("#myDiv")
-            const rectangles = d3.select("body")
+            const rectangles = d3.select("body").selectAll("#myDiv")
                 .data(data)
-
 
             rectangles
                 .enter()
@@ -49,8 +47,8 @@
         // 3. In the bottom half of the screen, create 10 circles (one for each object in the data) with fill colors equal to the `color` property on the corresponding data object.  Now picture the screen as an Cartesian plane with (0, 0) at the upper-left corner of the screen.
         // Position each circle such that the coordinates of its center are (`size`, -2*`size`).
         creatCircles = (data) => {
-            // const circs = d3.select("#myDiv")
-            const circs = d3.select("body")
+
+            const circs = d3.select("body").selectAll("#myDiv")
                 .data(data)
 
             circs

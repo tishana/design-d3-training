@@ -4106,25 +4106,43 @@ getPokeWeights = (arr) => {
 
 //     - What is the total egg distance (value on egg property) for all pokemon who have a weakness of 'Psychic'. 'Weaknesses' is a property on each pokemon object that contains a list of strings. Note: some 'egg' properties say 'Not in Eggs'. consider this value a -1 in your summation.
 getPsychicEggDistance = (arr) => {
+    // find all pokemon objects that have egg distances (Object.eggs != "Not in Eggs" )
+    // find all pokemon objects with "Psychic" listed as one of their weaknesses (Object.weaknesses.indexOf("Psychic") > -1) 
+    // create an array of JUST the egg distances (Object.eggs) with map
+    // add the total egg distances (Array.reduce)
+
     var hasEggs = x => {// pokemon that have egg distances
-        return x.eggs != "Not in Eggs"
+        return x.egg != "Not in Eggs"
     }
-
-    var isPsychic = m => { // pokemon that have a weakness of Psychic
-        // return
-        return m.weaknesses.filter("Psychic")
+    var hasPsychic = m => { // pokemon that have a weakness of Psychic
+        return m.weaknesses.indexOf("Psychic") > -1
     }
-    var pokeEggs = arr.filter(hasEggs)
-
-    var psychicEggs = pokeEggs.filter(isPsychic)
-
-
-    return psyches.reduce((a, b) => a + b) // add all of the values, return total 
+    var pokeEggs = arr.filter(hasEggs) // produces an array of pokemon object that have egg distances
+    var psychicEggs = pokeEggs.filter(hasPsychic) // produce an array of pokemon objects that have a weakness of Psychic
+    var psychicEggDistances = psychicEggs.map(e => { //produce an array of egg distances
+        return parseFloat(e.egg)
+    })
+    // return pokeEggs
+    return "Total egg distance is " + psychicEggDistances.reduce((a, b) => a + b) + " km." // add all of the values, return total 
 
 
 }
 
 
-//     - Determine which type of pokemon has the most weaknesses on average. List the types of pokemon and the number of their weaknesses in a list in descending order. Note: a pokemon can have more than one type. Because of this the same pokemon can be counted for more than one type. For example: the first object with id:1 would count as both 'Grass' and 'Poison' type.
+//     - Determine which type of pokemon has the most weaknesses on average. 
+//      List the types of pokemon and the number of their weaknesses in a list in descending order. 
+//      Note: a pokemon can have more than one type. Because of this the same pokemon can be counted for more than one type. 
+//      For example: the first object with id:1 would count as both 'Grass' and 'Poison' type.
+getTypesByWeaknesses = (arr) => {
+    // create a list of types from the data, only listing each type once
+    // get the pokemon into arrays by type
+    // get the types into descending order of weaknesses 
+    getTypes = arr.flatMap(t => {
+        return t.type
+    })
+    let types = new Set(getTypes) // Set() return a list of all unique values in an array
+    return types
+}
+//
 
 //     - break the pokemon down into 5 equal buckets of weight classes and then average the spawn_time (show in minutes) of each weight class
