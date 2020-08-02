@@ -1,0 +1,6 @@
+Review `Viz Critique.png` and use what you have learned about data visualization design principles to come up with 5-10 notes about aspects of the visualization that you think are either good or bad (as many in each category as you feel is appropriate). In addition, come up with your own design for a visualization that displays the same data. Submit your design as a rough sketch or mock-up exported from a piece of drawing or design software. Also write a couple of sentences on why you think that your design effectively presents the data.
+
+1. I feel that the line data is consistent with the bar graph.
+2. The colors make it easy to distinguish each of the visualizations, as well as the two y axis descriptions.
+3. The text that is atop each bar seem to correspond with the data along the left y axis, and is unnecessary. Removing the text is the only change I would make.
+4. It seems that whatever the actual orders include could vary, or that the price could vary, given the actual amount in sales in euros, but that isnt clear. August and September had a difference of nearly 100 orders but there is a significant drop in the sales total in Sept. If we knew WHAT was being sold and how much of it, this might make more sense to me.

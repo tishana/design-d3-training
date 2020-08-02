@@ -2,7 +2,8 @@
 <html>
 
 <body>
-    <div id="myDiv"></div>
+    <div id="myDiv">
+    </div>
 
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -20,45 +21,78 @@
         // 1. In a new HTML file, read in data.json file using D3. 
         // This file contains an array of 10 objects that have the following properties: size and color.
         // THERE WERE ONLY 9 OBJECTS IN data.json, so I added one size 40 color bisque
+        var height = 1500;
+        var width = 1500;
+        var margin = {
+            top: 50,
+            right: 50,
+            bottom: 50,
+            left: 50
+        };
+
+        // calculate dimensions without margins
+        var innerWidth = width - margin.left - margin.right;
+        var innerHeight = height - margin.top - margin.bottom;
+
+        const svg = d3
+            .select("#myDiv")
+            .append('svg')
+            .attr('class', 'svg-main')
+            .attr('height', height)
+            .attr('width', width);
+
+        var g = svg
+            .append('g')
+            .attr('class', 'g-main')
+            .attr('height', 500)
+            .attr('width', 500)
+            .attr('transform', 'translate(500 500)');
+        // .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+
         d3.json('data.json', (e, data) => {
 
             if (e) { console.log("Unable to load data") }
-            // call function here using the data
+
             createRects(data)
-            creatCircles(data)
+            createCircles(data)
         })
 
-
         // 2. In the top half the screen, create 10 rectangles (one for each object in the data) with widths and fill colors equal to the `size` and `color` properties on the corresponding data object.
-
+        // adding g elements to add to svg
         createRects = (data) => {
-            const rectangles = d3.select("body").selectAll("#myDiv")
+
+
+            const rectangles = g.selectAll('rect') // I was using select('rect') and nothing was rendering
                 .data(data)
 
             rectangles
                 .enter()
                 .append('rect')
+                .attr('class', 'rect-group')
                 .attr('x', (d, i) => (i * 10) + 2)
                 .attr('y', 50)
                 .attr('width', d => d.size)
-                .attr('height', 10)
-                .style('color', d => d.color)
+                .attr('height', 15)
+                .style('fill', d => d.color)
         }
         // 3. In the bottom half of the screen, create 10 circles (one for each object in the data) with fill colors equal to the `color` property on the corresponding data object.  Now picture the screen as an Cartesian plane with (0, 0) at the upper-left corner of the screen.
         // Position each circle such that the coordinates of its center are (`size`, -2*`size`).
-        creatCircles = (data) => {
+        createCircles = (data) => {
 
-            const circs = d3.select("body").selectAll("#myDiv")
+
+            const circs = g.selectAll('circle')
                 .data(data)
 
             circs
                 .enter()
                 .append('circle')
                 .attr('cx', d => d.size)
-                .attr('cy', d => d.size * -2)
-                .attr('r', 5)
-                .style('color', d => d.color)
+                .attr('cy', d => d.size * (-2))
+                .attr('r', 15)
+                .style('fill', d => d.color)
         }
+
     </script>
 </body>
 

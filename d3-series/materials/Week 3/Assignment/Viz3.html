@@ -6,9 +6,74 @@
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script>
+        // 1. In a new HTML file, write an `updateViz` function that takes `data` as an argument.
+        // 2. Inside this function use `data`, along with the general enter/exit/update pattern to do the following:
+        // - For new data elements, create a circle with a radius equal to the data element's `size` property, and a border color equal to the data element's `color` property. Place this circle in a random location on the screen.
+        // - Remove any circles with no corresponding data element
+        // 3. Place the following piece of code in your script. 
+        // This function will remove the last data element of the data passed every 2 seconds and then call your `updateViz` function to update the visualization.
+        // 4. Read in data.json and call `animate` on the data.
+
+        // create the svg
+        const svg = d3
+            .select("#vizDiv")
+            .append('svg')
+            .attr('class', 'svg-main')
+            .attr('height', 500)
+            .attr('width', 500);
+
+
         function updateViz(data) {
             // do stuff
+
+            // create circles "enter"
+
+            const enterCircs = d3.select(".svg-main")
+                .selectAll("circle")
+                .data(data)
+
+            enterCircs
+                .enter()
+                .append('circle')
+                .attr('cx', d3.randomUniform(100)())
+                .attr('cy', d3.randomUniform(300)())
+                .attr('r', d => d.size)
+                .style('stroke', d => d.color)
+
+            // remove circles "exit"
+            const exitCircs = d3.select(".svg-main")
+                .selectAll("circle")
+                .data(data)
+
+            exitCircs
+                .exit()
+                .remove()
+
+
         }
+
+        // call in data
+
+        d3.json('data.json', (e, data) => {
+
+            if (e) {
+                console.log("Unable to load data")
+            }
+            animate(data);
+
+        })
+
+        // animate function
+        function animate(data) {
+            updateViz(data);
+            var loop = setInterval(function () {
+                if (data.length === 0) { clearInterval(loop); }
+                data.pop();
+                updateViz(data);
+            }, 2000);
+        }
+
+
     </script>
 </body>
 
